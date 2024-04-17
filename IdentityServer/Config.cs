@@ -8,17 +8,17 @@ namespace IdentityServer
         public static IEnumerable<Client> Clients =>
             new Client[]        {
         new Client{
-        ClientId = "AccountClient",
+        ClientId = "UserServiceClient",
         AllowedGrantTypes = GrantTypes.ClientCredentials,
         ClientSecrets =
             {
-                new Secret("secret".Sha256())
+                new Secret("cnytkuscu".Sha256())
             },
-        AllowedScopes ={ "Account"}
+        AllowedScopes ={ "UserServiceScope" }
             }
         };
         public static IEnumerable<ApiScope> ApiScope => new ApiScope[] {
-        new IdentityServer4.Models.ApiScope("Account","Account API")};
+        new IdentityServer4.Models.ApiScope("UserServiceScope","UserService API")};
         public static IEnumerable<ApiResource> ApiResource => new ApiResource[] { };
         public static IEnumerable<IdentityResource> IdentityResource => new IdentityResource[] { };
         public static List<TestUser> TestUser => new List<TestUser> { };
