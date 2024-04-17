@@ -5,15 +5,14 @@ using Common.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UserService.Interfaces;
 
 namespace UserService.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-
     public class UserController : ControllerBase
     {
-
         private readonly IMapper _mapper;
         private readonly IGenericService<User> _service;
         private readonly IGenericService<LoginRecord> _loginRecordGenericService;
@@ -21,7 +20,12 @@ namespace UserService.Controllers
         private readonly IUserService _userService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserController(IMapper mapper, IGenericService<User> service, IUserService userService, IHttpContextAccessor httpContextAccessor, IGenericService<LoginRecord> loginRecordGenericService, IGenericService<AccountHistory> accountHistoryService)
+        public UserController(IMapper mapper, 
+            IGenericService<User> service, 
+            IUserService userService, 
+            IHttpContextAccessor httpContextAccessor, 
+            IGenericService<LoginRecord> loginRecordGenericService, 
+            IGenericService<AccountHistory> accountHistoryService)
         {
             _mapper = mapper;
             _service = service;

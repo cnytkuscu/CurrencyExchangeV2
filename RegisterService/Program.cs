@@ -4,11 +4,13 @@ using Common.MapProfiles;
 using Common.Repositories;
 using Common.Services;
 using Microsoft.EntityFrameworkCore;
+using RegisterService.Interfaces;
+using RegisterService.Repositories;
 using System.Reflection;
 using UserService.Interfaces;
 using UserService.Repositories;
 
-namespace UserService
+namespace RegisterService
 {
     public class Program
     {
@@ -19,22 +21,20 @@ namespace UserService
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddAutoMapper(typeof(MapProfile));
-
+             
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserService, UserService.Services.UserService>();
+            builder.Services.AddScoped<IRegisterService,RegisterService.Services.RegisterService>();
+            builder.Services.AddScoped<IRegisterRepository, RegisterRepository>();
+            
             builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
-            builder.Services.AddScoped<IUserService, UserService.Services.UserService>();
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
-
-            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
 
             builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnectionString"),
                             option =>
                             {
                                 option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
                             }));
-
 
             builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -51,9 +51,9 @@ namespace UserService
 
             builder.Services.AddAuthorization(options =>
             {
-                options.AddPolicy("UserService.ReadPolicy", policy => policy.RequireClaim("scope", "UserService.Read"));
-                options.AddPolicy("UserService.CreateOrUpdatePolicy", policy => policy.RequireClaim("scope",new[] { "UserService.Write","UserService.Update" }));
-                options.AddPolicy("UserService.DeletePolicy", policy => policy.RequireClaim("scope", "UserService.Delete"));
+                options.AddPolicy("RegisterService.ReadPolicy", policy => policy.RequireClaim("scope", "RegisterService.Read"));
+                options.AddPolicy("RegisterService.CreateOrUpdatePolicy", policy => policy.RequireClaim("scope", new[] { "RegisterService.Write", "RegisterService.Update" }));
+                options.AddPolicy("RegisterService.DeletePolicy", policy => policy.RequireClaim("scope", "RegisterService.Delete"));
             });
 
             var app = builder.Build();

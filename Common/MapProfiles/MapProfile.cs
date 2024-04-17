@@ -14,6 +14,7 @@ namespace Common.MapProfiles
         public MapProfile()
         {
             CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<User, UserRegisterDTO>().ReverseMap();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Common.Entities;
-using Common.Interfaces;
+using UserService.Interfaces;
 
 namespace UserService.Services
 {
@@ -14,6 +14,11 @@ namespace UserService.Services
         {
             _userRepository = accountRepository;
             _mapper = mapper;
+        }
+
+        public bool CheckUsernameIsExists(string username)
+        {
+          return _userRepository.CheckUsername(username);
         }
 
         public User Login(string accountUsername, string accountPassword)

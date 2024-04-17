@@ -1,6 +1,6 @@
 ﻿using Common.Entities;
 
-namespace Common.Interfaces
+namespace UserService.Interfaces
 {
     public interface IUserRepository
     {

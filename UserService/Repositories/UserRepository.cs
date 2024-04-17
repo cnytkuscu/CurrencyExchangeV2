@@ -1,6 +1,6 @@
 ﻿using Common;
 using Common.Entities;
-using Common.Interfaces;
+using UserService.Interfaces;
 
 namespace UserService.Repositories
 {
@@ -15,7 +15,7 @@ namespace UserService.Repositories
 
         public bool CheckUsername(string username)
         {
-            throw new NotImplementedException();
+            return _context.User.Select(x => x.Username == username).Count() > 0 ? true : false;
         }
 
         public User Login(string accountUsername, string accountPassword)
