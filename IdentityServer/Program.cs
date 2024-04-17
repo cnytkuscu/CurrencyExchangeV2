@@ -8,8 +8,9 @@ namespace IdentityServer
 
 
             builder.Services.AddIdentityServer()
-                .AddInMemoryClients(Config.Clients)
-                .AddInMemoryApiScopes(Config.ApiScope)
+                .AddInMemoryClients(Config.GetClients())
+                .AddInMemoryApiScopes(Config.GetApiScopes())
+                .AddInMemoryApiResources(Config.GetApiResources())
                 .AddDeveloperSigningCredential();
             var app = builder.Build();
             app.UseIdentityServer();

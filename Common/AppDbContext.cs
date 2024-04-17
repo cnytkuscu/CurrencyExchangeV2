@@ -11,7 +11,9 @@ namespace Common
         }
 
         public DbSet<User> User { get; set; }
-        //public DbSet<LoginRecord> LoginRecords { get; set; }
+        public DbSet<LoginRecord> LoginRecord { get; set; }
+        public DbSet<AccountHistory> AccountHistory { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

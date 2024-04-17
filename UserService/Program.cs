@@ -48,6 +48,13 @@ namespace UserService
                     };
                 });
 
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("UserService.ReadPolicy", policy => policy.RequireClaim("scope", "UserService.Read"));
+                options.AddPolicy("UserService.CreateOrUpdatePolicy", policy => policy.RequireClaim("scope",new[] { "UserService.Write","UserService.Update" }));
+                options.AddPolicy("UserService.DeletePolicy", policy => policy.RequireClaim("scope", "UserService.Delete"));
+            });
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
